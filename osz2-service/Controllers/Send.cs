@@ -1,3 +1,4 @@
+using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using Osz2Decryptor;
 using Osz2Decryptor.Utilities;
@@ -22,9 +23,10 @@ public class Send : ControllerBase {
             Osz2Package package = new Osz2Package(file.OpenReadStream());
 
             foreach (KeyValuePair<string,byte[]> oszFile in package.Files) {
-                string retreiveTicket = CryptoUtilities.ComputeHash($"{DateTime.Now}-{oszFile.Key}");
+                string osuEnd = oszFile.Key.EndsWith(".osu") ? ".osu" : "";
+                string retreiveTicket = CryptoUtilities.ComputeHash($"{DateTime.Now}-{oszFile.Key}") + osuEnd;
 
-                bool addSuccess = Retrieve.FileStore.TryAdd(retreiveTicket, oszFile);
+                bool addSuccess = Tickets.FileStore.TryAdd(retreiveTicket, oszFile);
 
                 if (!addSuccess) {
                     return StatusCode(500, "Could not generate retrieval ticket.");
@@ -35,7 +37,7 @@ public class Send : ControllerBase {
                 Console.WriteLine($"New Ticket: {retreiveTicket} for {oszFile.Key}");
             }
 
-            return this.Content(string.Join('-', retrieveTickets));
+            return this.Content(string.Join('\n', retrieveTickets));
         }
         catch (Exception e) {
             return StatusCode(500, "Parsing osz2 failed.");
