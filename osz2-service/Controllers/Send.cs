@@ -24,7 +24,7 @@ public class Send : ControllerBase {
 
             foreach (KeyValuePair<string,byte[]> oszFile in package.Files) {
                 string osuEnd = oszFile.Key.EndsWith(".osu") ? ".osu" : "";
-                
+
                 //Making it unique to remove even the slightest chance of collisions
                 //Also not having to deal with URL encoding the filename makes this more convinient.
                 string retreiveTicket = CryptoUtilities.ComputeHash($"{DateTime.Now}-{oszFile.Key}") + osuEnd;
