@@ -4,7 +4,7 @@ using Osz2Decryptor.Utilities;
 
 namespace osz2_service.Controllers;
 
-public class Receive : ControllerBase {
+public class Send : ControllerBase {
     private struct ReceiveTicketResult {
         public List<string> RetrieveTickets;
     }
