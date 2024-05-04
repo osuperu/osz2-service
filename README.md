@@ -1,2 +1,3 @@
 # osz2-service
-osz2 decryption service made to run alongside Waffle, handling osz2 BSS requests.
+
+Modified osz2-service forked from [waffle](https://github.com/Waffle-osu/osz2-service), for use in the beatmap submission system.
