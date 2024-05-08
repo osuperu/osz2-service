@@ -84,6 +84,7 @@
     <ItemGroup>
       <PackageReference Include="ICSharpCode.SharpZipLib.dll" Version="0.85.4.369" />
       <PackageReference Include="Ionic.Zlib" Version="1.9.1.5" />
+      <PackageReference Include="OsuParsers" Version="1.7.1" />
     </ItemGroup>
 
 </Project>

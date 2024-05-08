@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using OsuParsers.Decoders;
 using Osz2Decryptor;
 
 namespace osz2_service.Controllers;
@@ -17,9 +18,17 @@ public class Decrypt : ControllerBase
         try
         {
             Osz2Package package = new Osz2Package(file.OpenReadStream());
-            
+
+            var beatmaps = package.Files
+                .Where(item => item.Key.EndsWith(".osu"))
+                .ToDictionary(
+                    item => item.Key,
+                    item => BeatmapDecoder.Decode(System.Text.Encoding.UTF8.GetString(item.Value).Split("\n"))
+                );
+
             return this.Ok(new Dictionary<string, object> {
                 { "metadata", package.Metadata },
+                { "beatmaps", beatmaps },
                 { "files", package.Files }
             });
         }
