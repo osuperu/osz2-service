@@ -26,6 +26,7 @@ public class Decrypt : ControllerBase
                     item => BeatmapDecoder.Decode(System.Text.Encoding.UTF8.GetString(item.Value).Split("\n"))
                 );
 
+            // TODO: Validate files (audio, images, etc..)
             return this.Ok(new Dictionary<string, object> {
                 { "metadata", package.Metadata },
                 { "beatmaps", beatmaps },
