@@ -11,10 +11,17 @@ public class Patch : ControllerBase
     [Produces("application/json")]
     public ActionResult Post([FromForm(Name = "osz2")] IFormFile osz2, [FromForm(Name = "patch")] IFormFile patch)
     {
-        using var newData = new MemoryStream();
         PatchDecryptor patcher = new PatchDecryptor();
+        using var data = new MemoryStream();
         
-        patcher.Patch(osz2.OpenReadStream(), newData, patch.OpenReadStream(), 0);
-        return File(newData.ToArray(), "application/octet-stream", "osz2");
+        try
+        {
+            patcher.Patch(osz2.OpenReadStream(), data, patch.OpenReadStream(), 0);
+            return File(data.ToArray(), "application/octet-stream", "osz2");
+        }
+        catch (Exception e)
+        {
+            return this.BadRequest(e.Message);
+        }
     }
 }
