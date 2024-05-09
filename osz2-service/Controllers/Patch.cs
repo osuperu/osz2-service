@@ -9,9 +9,12 @@ public class Patch : ControllerBase
     [HttpPost]
     [Consumes("multipart/form-data")]
     [Produces("application/json")]
-    public ActionResult Post([FromForm(Name = "file")] IFormFile file)
+    public ActionResult Post([FromForm(Name = "osz2")] IFormFile osz2, [FromForm(Name = "patch")] IFormFile patch)
     {
-        // TODO: Implement patch files
-        return this.Ok();
+        using var newData = new MemoryStream();
+        PatchDecryptor patcher = new PatchDecryptor();
+        
+        patcher.Patch(osz2.OpenReadStream(), newData, patch.OpenReadStream(), 0);
+        return File(newData.ToArray(), "application/octet-stream", "osz2");
     }
 }
