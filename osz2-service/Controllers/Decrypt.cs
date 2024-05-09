@@ -10,14 +10,14 @@ public class Decrypt : ControllerBase
     [HttpPost]
     [Consumes("multipart/form-data")]
     [Produces("application/json")]
-    public ActionResult Post([FromForm(Name = "file")] IFormFile file)
+    public ActionResult Post([FromForm(Name = "osz2")] IFormFile osz2)
     {
-        if (file.Length >= int.MaxValue)
+        if (osz2.Length >= int.MaxValue)
             return this.BadRequest("Invalid file size");
 
         try
         {
-            Osz2Package package = new Osz2Package(file.OpenReadStream());
+            Osz2Package package = new Osz2Package(osz2.OpenReadStream());
 
             var beatmaps = package.Files
                 .Where(item => item.Key.EndsWith(".osu"))
