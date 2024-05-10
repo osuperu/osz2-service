@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using OsuParsers.Decoders;
+using osu.Game.Beatmaps;
+using osu.Game.Beatmaps.Formats;
+using osu.Game.IO;
 using Osz2Decryptor;
 
 namespace osz2_service.Controllers;
@@ -23,7 +25,7 @@ public class Decrypt : ControllerBase
                 .Where(item => item.Key.EndsWith(".osu"))
                 .ToDictionary(
                     item => item.Key,
-                    item => BeatmapDecoder.Decode(System.Text.Encoding.Default.GetString(item.Value).Split("\r\n"))
+                    item => ParseBeatmap(item.Value).BeatmapInfo
                 );
 
             // TODO: Validate files (audio, images, etc..)
@@ -37,5 +39,15 @@ public class Decrypt : ControllerBase
         {
             return this.BadRequest(e.Message);
         }
+    }
+
+    private Beatmap ParseBeatmap(byte[] data)
+    {
+        LineBufferedReader reader = new LineBufferedReader(new MemoryStream(data));
+        Beatmap beatmap = Decoder.GetDecoder<Beatmap>(reader).Decode(reader);
+        beatmap.BeatmapInfo.BPM = beatmap.ControlPointInfo.BPMMinimum;
+        beatmap.BeatmapInfo.Length = beatmap.CalculatePlayableLength();
+        beatmap.BeatmapInfo.MaxCombo = beatmap.GetMaxCombo();
+        return beatmap;
     }
 }
