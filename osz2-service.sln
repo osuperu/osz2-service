@@ -5,8 +5,6 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "osz2-service", "osz2-service\osz2-service.csproj", "{3C19AAEC-D634-4168-851C-DDB1F0529C04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Osz2Decryptor", "Dependencies\Osz2Decryptor\Osz2Decryptor\Osz2Decryptor.csproj", "{78C1DC92-92C4-407B-9248-8C3F93B26B33}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,9 +18,5 @@ Global
 		{3C19AAEC-D634-4168-851C-DDB1F0529C04}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C19AAEC-D634-4168-851C-DDB1F0529C04}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C19AAEC-D634-4168-851C-DDB1F0529C04}.Release|Any CPU.Build.0 = Release|Any CPU
-		{78C1DC92-92C4-407B-9248-8C3F93B26B33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{78C1DC92-92C4-407B-9248-8C3F93B26B33}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{78C1DC92-92C4-407B-9248-8C3F93B26B33}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{78C1DC92-92C4-407B-9248-8C3F93B26B33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
