@@ -23,7 +23,7 @@ public class Decrypt : ControllerBase
                 .Where(item => item.Key.EndsWith(".osu"))
                 .ToDictionary(
                     item => item.Key,
-                    item => BeatmapDecoder.Decode(System.Text.Encoding.UTF8.GetString(item.Value).Split("\n"))
+                    item => BeatmapDecoder.Decode(System.Text.Encoding.Default.GetString(item.Value).Split("\r\n"))
                 );
 
             // TODO: Validate files (audio, images, etc..)
