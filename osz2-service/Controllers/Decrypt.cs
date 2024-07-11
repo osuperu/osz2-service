@@ -28,7 +28,6 @@ public class Decrypt : ControllerBase
                     item => ParseBeatmap(item.Value).BeatmapInfo
                 );
 
-            // TODO: Validate files (audio, images, etc..)
             return this.Ok(new Dictionary<string, object> {
                 { "metadata", package.Metadata },
                 { "beatmaps", beatmaps },
