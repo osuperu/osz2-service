@@ -28,10 +28,12 @@ public class Decrypt : ControllerBase
                     item => ParseBeatmap(item.Value).BeatmapInfo
                 );
 
+            var files = RemoveUnusedFiles(package.Files);
+
             return this.Ok(new Dictionary<string, object> {
                 { "metadata", package.Metadata },
                 { "beatmaps", beatmaps },
-                { "files", package.Files }
+                { "files", files }
             });
         }
         catch (Exception e)
@@ -48,5 +50,18 @@ public class Decrypt : ControllerBase
         beatmap.BeatmapInfo.Length = beatmap.CalculatePlayableLength();
         beatmap.BeatmapInfo.MaxCombo = beatmap.GetMaxCombo();
         return beatmap;
+    }
+
+    private Dictionary<string, byte[]> RemoveUnusedFiles(Dictionary<string, byte[]> files)
+    {
+        var validFileExtensions = new HashSet<string> {
+            ".osu", ".osz", ".osb", ".osk", ".png", ".mp3", ".jpeg",
+            ".wav", ".png", ".wav", ".ogg", ".jpg", ".wmv", ".flv",
+            ".mp3", ".flac", ".mp4", ".avi", ".ini", ".jpg", ".m4v"
+        };
+
+        return files
+            .Where(item => validFileExtensions.Contains(Path.GetExtension(item.Key.ToLower())))
+            .ToDictionary(item => item.Key, item => item.Value);
     }
 }
