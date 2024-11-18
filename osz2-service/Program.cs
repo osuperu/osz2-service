@@ -12,6 +12,4 @@ builder.Services.AddControllers().AddNewtonsoftJson();
 var app = builder.Build();
 
 app.UseRouting().UseEndpoints(endpoints => endpoints.MapControllers());
-
 app.Run();
-
