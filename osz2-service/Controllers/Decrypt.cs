@@ -44,8 +44,8 @@ public class Decrypt : ControllerBase
 
     private Beatmap ParseBeatmap(byte[] data)
     {
-        LineBufferedReader reader = new LineBufferedReader(new MemoryStream(data));
-        Beatmap beatmap = Decoder.GetDecoder<Beatmap>(reader).Decode(reader);
+        using var reader = new LineBufferedReader(new MemoryStream(data));
+        var beatmap = Decoder.GetDecoder<Beatmap>(reader).Decode(reader);
         beatmap.BeatmapInfo.BPM = beatmap.ControlPointInfo.BPMMinimum;
         beatmap.BeatmapInfo.Length = beatmap.CalculatePlayableLength();
         beatmap.BeatmapInfo.MaxCombo = beatmap.GetMaxCombo();
