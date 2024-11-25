@@ -10,8 +10,6 @@ Decoder.RegisterDependencies(new AssemblyRulesetStore());
 // Add services to the container
 builder.Services.AddControllers().AddNewtonsoftJson();
 
-var app = builder.Build();
-
 // Setup a ~100mb limit for file uploads
 builder.Services.Configure<FormOptions>(options =>
 {
@@ -22,6 +20,7 @@ builder.WebHost.ConfigureKestrel(serverOptions =>
     serverOptions.Limits.MaxRequestBodySize = 104857600;
 });
 
+var app = builder.Build();
 
 app.UseRouting().UseEndpoints(endpoints => endpoints.MapControllers());
 app.Run();
