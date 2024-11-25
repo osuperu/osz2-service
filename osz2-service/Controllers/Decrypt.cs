@@ -14,6 +14,9 @@ public class Decrypt : ControllerBase
     [Produces("application/json")]
     public ActionResult Post([FromForm(Name = "osz2")] IFormFile osz2)
     {
+        if (osz2 == null)
+            return this.BadRequest("No file provided");
+
         if (osz2.Length >= int.MaxValue)
             return this.BadRequest("Invalid file size");
 

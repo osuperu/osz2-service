@@ -13,6 +13,9 @@ public class Parse : ControllerBase
     [Produces("application/json")]
     public ActionResult Post([FromForm(Name = "osu")] IFormFile osu)
     {
+        if (osu == null)
+            return this.BadRequest("No file provided");
+
         try
         {
             using Stream stream = osu.OpenReadStream();
